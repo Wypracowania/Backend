@@ -1,0 +1,1 @@
+web: gunicorn wypracowania.wsgi --log-file -
