@@ -14,9 +14,10 @@ class Order(models.Model):
 	]
     document = models.CharField(max_length=3, choices=DOCUMENT_CHOICES, default='ESE')
     category = models.CharField(max_length=3, choices=CATEGORY_CHOICES, default='')
-    topic = models.CharField(max_length=100, blank=False, default='')
-    pages = models.IntegerField(default=1)
+    topic    = models.CharField(max_length=100, blank=False, default='')
+    pages    = models.IntegerField(default=1)
     deadline = models.DateField(auto_now=False, auto_now_add=False)
+    instructions = models.CharField(max_length=200, default="")
     
     def __str__(self):
         return self.topic

@@ -25,7 +25,6 @@ def Login(request):
 
 @api_view(['POST'])
 def Register(request):
-    # data = json.loads(request.body)
     password = request.data['password']
     username = request.data['username']
     try:
@@ -36,7 +35,7 @@ def Register(request):
     except:
         user = None
     if user is not None:
-        print('registered')
+        return JsonResponse(token.key, safe=False)
     else:
         print('fail')
     return HttpResponse('woof')
