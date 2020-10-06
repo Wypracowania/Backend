@@ -28,7 +28,7 @@ def Register(request):
     password = request.data['password']
     username = request.data['username']
     try:
-        user = User.objects.create_user(username=username, password=password, email="k@gmail.com")
+        user  = User.objects.create_user(username=username, password=password, email="k@gmail.com")
         token = Token.objects.create(user=user)
         user.save()
         print(token.key)

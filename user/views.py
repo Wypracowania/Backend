@@ -4,6 +4,7 @@ from user.serializers import OrderSerializer
 from rest_framework.decorators import api_view
 from user.models import Order
 from rest_framework.response import Response
+import json
 # Create your views here.
 
 @api_view(['POST'])
@@ -23,8 +24,13 @@ def NewOrder(request):
         deadline=deadline,
         instructions=instruct
     )
-    if new_order.is_valid():
+    if new_order:
         new_order.save()
-        return JsonResponse("Utworzono pomyślnie")
-    return JsonResponse("error")
+        return JsonResponse({"Utworzono pomyślnie": "true"})
+    return JsonResponse({"error": ":c"})
+
+@api_view(['GET'])
+def GetOrders(request):
+    Serialized = OrderSerializer(Order.objects.all(), many=True)
+    return Response(Serialized.data)
 
