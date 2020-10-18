@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Order(models.Model):
@@ -12,6 +12,7 @@ class Order(models.Model):
 		('HUM', 'Nauki humanistyczne'),
 		('ŚCI', 'Nauki ścisłe'),
 	]
+    owner    = models.ForeignKey(User, on_delete=models.CASCADE, default='')
     document = models.CharField(max_length=3, choices=DOCUMENT_CHOICES, default='ESE')
     category = models.CharField(max_length=3, choices=CATEGORY_CHOICES, default='')
     topic    = models.CharField(max_length=100, blank=False, default='')
