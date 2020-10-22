@@ -12,7 +12,8 @@ import json
 
 @api_view(['POST'])
 def Login(request):
-    data = request.data
+    data = request.POST
+    print(data)
     password = data.get('password')
     username = data.get('username')
     userAuth = authenticate(username=username, password=password)
@@ -25,7 +26,7 @@ def Login(request):
 
 @api_view(['POST'])
 def Register(request):
-    data = request.data
+    data = request.POST
     password = data.get('password')
     username = data.get('username')
     try:
