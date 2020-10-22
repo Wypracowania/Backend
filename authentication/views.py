@@ -13,7 +13,6 @@ import json
 @api_view(['POST'])
 def Login(request):
     data = request.data
-    print(data)
     password = data.get('password')
     username = data.get('username')
     userAuth = authenticate(username=username, password=password)

@@ -23,15 +23,17 @@ SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '+*p@os0yys#%1zycx+^ks)#&jd)n-ugtmo=6f1ecw1^9^a2cl^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['wypracowania.herokuapp.com', '127.0.0.1', 'localhost:8000', 'localhost']
+# ALLOWED_HOSTS = ['wypracowania.herokuapp.com', '127.0.0.1', 'localhost:8000', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -128,14 +130,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = ''
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    '/var/www/static/',
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+#     '/var/www/static/',
+# ]
+
+COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
 #S3 BUCKET
 
@@ -148,6 +153,7 @@ AWS_S3_REGION_NAME = 'eu-central-1'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_DEFAULT_ACL = None
 AWS_S3_FILE_OVERWRITE = False
-PUBLIC_MEDIA_LOCATION = 'pisarz'
-MEDIA_URL = f'https://pisarz.s3.eu-central-1.amazonaws.com/pisarz/'
+# PUBLIC_MEDIA_LOCATION = 'pisarz'
+# MEDIA_URL = f'https://pisarz.s3.eu-central-1.amazonaws.com/pisarz/'
 AWS_S3_ADDRESSING_STYLE = "virtual"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
