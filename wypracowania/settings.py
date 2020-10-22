@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'writer',
     'authentication',
     'corsheaders',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -86,7 +87,7 @@ WSGI_APPLICATION = 'wypracowania.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -135,3 +136,18 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     '/var/www/static/',
 ]
+
+#S3 BUCKET
+
+AWS_ACCESS_KEY_ID = 'AKIA4SYCRZ3ZSOUNXNEA'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'pisarz'
+
+AWS_S3_REGION_NAME = 'eu-central-1'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE = False
+PUBLIC_MEDIA_LOCATION = 'pisarz'
+MEDIA_URL = f'https://pisarz.s3.eu-central-1.amazonaws.com/pisarz/'
+AWS_S3_ADDRESSING_STYLE = "virtual"

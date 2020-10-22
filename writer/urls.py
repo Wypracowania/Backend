@@ -7,5 +7,6 @@ urlpatterns = [
     path('rejestracja', Register, name='rejestracja'),
     path('zamowienie/<int:id>', order, name='zamowienie'),
     path('profil', upload_file, name='profile'),
-    path('api/profile_photo', get_writer_photo, name='profile_photo')
+    # username
+    path('api/profile_photo/<str:pk>', get_writer_photo, name='profile_photo')
 ]

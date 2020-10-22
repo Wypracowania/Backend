@@ -86,6 +86,12 @@ def upload_file(request):
     return render(request, 'upload.html', {'form': form})
 
 @api_view(['GET'])
-def get_writer_photo(request):
-    serialized = ImageSerializer(WriterImage.objects.get(id=7), context={"request": request})
+def get_writer_photo(request, pk):
+    try:
+        writer = User.objects.get(username=pk)
+        writer_image = WriterImage.objects.get(writer=writer)
+    except:
+        writer = None
+        writer_image = None
+    serialized = ImageSerializer(writer_image, context={"request": request})
     return Response(serialized.data)

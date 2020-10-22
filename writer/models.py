@@ -17,3 +17,6 @@ class Bid(models.Model):
 class WriterImage(models.Model):
     writer = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     image  = models.ImageField(upload_to="pisarz", unique=True)
+    
+    def __str__(self):
+        return self.writer.username + " photo"
