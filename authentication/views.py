@@ -19,10 +19,9 @@ def Login(request):
     if userAuth:
         user  = User.objects.get(username=username)
         token = Token.objects.get(user=user)
-        return JsonResponse(token.key, safe=False)
+        return Response({'token': token.key})
     else:
-        print('fail')
-        return HttpResponse('woof')
+        return Response({'token': 'Nie udało się zalogować'})
 
 @api_view(['POST'])
 def Register(request):
@@ -31,15 +30,13 @@ def Register(request):
     try:
         user  = User.objects.create_user(username=username, password=password, email="kk2k50@gmail.com")
         token = Token.objects.create(user=user)
-        # Ading user group
+        # Adding user group
         group = Group.objects.get(name='customer') 
         group.user_set.add(user)
-        #
         user.save()
     except:
         user = None
     if user is not None:
-        return JsonResponse(token.key, safe=False)
+        return Response({'token': token.key})
     else:
-        print('fail')
-    return HttpResponse('woof')
+        return Response({'token': 'Nie udało się zarejestrować'})
