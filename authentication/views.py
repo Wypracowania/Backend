@@ -12,9 +12,8 @@ import json
 
 @api_view(['POST'])
 def Login(request):
-    data = request.data
-    password = data.get('password')
-    username = data.get('username')
+    username = request.data['username']
+    password = request.data['password']
     userAuth = authenticate(username=username, password=password)
     if userAuth:
         user  = User.objects.get(username=username)
@@ -25,9 +24,8 @@ def Login(request):
 
 @api_view(['POST'])
 def Register(request):
-    data = request.data
-    password = data.get('password')
-    username = data.get('username')
+    username = request.data['username']
+    password = request.data['password']
     try:
         user  = User.objects.create_user(username=username, password=password, email="kk2k50@gmail.com")
         token = Token.objects.create(user=user)
