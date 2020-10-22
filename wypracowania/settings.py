@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -156,4 +156,4 @@ AWS_S3_FILE_OVERWRITE = False
 # PUBLIC_MEDIA_LOCATION = 'pisarz'
 # MEDIA_URL = f'https://pisarz.s3.eu-central-1.amazonaws.com/pisarz/'
 AWS_S3_ADDRESSING_STYLE = "virtual"
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
