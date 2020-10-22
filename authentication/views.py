@@ -12,7 +12,7 @@ import json
 
 @api_view(['POST'])
 def Login(request):
-    data = request.POST
+    data = request.data
     print(data)
     password = data.get('password')
     username = data.get('username')
@@ -26,7 +26,7 @@ def Login(request):
 
 @api_view(['POST'])
 def Register(request):
-    data = request.POST
+    data = request.data
     password = data.get('password')
     username = data.get('username')
     try:
