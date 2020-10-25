@@ -23,7 +23,7 @@ SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '+*p@os0yys#%1zycx+^ks)#&jd)n-ugtmo=6f1ecw1^9^a2cl^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['wypracowania.herokuapp.com', '127.0.0.1', 'localhost:8000', 'localhost']
 ALLOWED_HOSTS = ['*']
