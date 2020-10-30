@@ -19,6 +19,18 @@ class Order(models.Model):
     pages    = models.IntegerField(default=1)
     deadline = models.DateField(auto_now=False, auto_now_add=False)
     instructions = models.CharField(max_length=200, default="")
-    
+
     def __str__(self):
         return self.topic
+
+class OrderInfo(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, default='')
+    paid = models.BooleanField(default=False)
+    assigned_writer = models.ForeignKey(User, on_delete=models.CASCADE, default='')
+    completed = models.BooleanField(default=False)
+    value = models.IntegerField(default=0)
+    completed_order = models.FileField(upload_to="completed", unique=True, null=True)
+    date_completed = models.DateField(null=True)
+
+    def __str__(self):
+        return self.order

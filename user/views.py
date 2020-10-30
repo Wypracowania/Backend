@@ -42,8 +42,13 @@ def NewOrder(request):
     return JsonResponse({"error": ":c"})
 
 @api_view(['GET'])
-def GetOrders(request):
-    Serialized = OrderSerializer(Order.objects.all(), many=True)
+def GetOrders(request, username):
+    try:
+        user = User.objects.get(username= username)
+        user_orders = Order.objects.filter(owner = user)
+    except:
+        user_orders = None
+    Serialized = OrderSerializer(user_orders, many=True)
     return Response(Serialized.data)
 
 @api_view(['GET'])
