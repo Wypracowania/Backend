@@ -61,11 +61,11 @@ def Register(request):
 def order(request, id):
     order = Order.objects.get(id=id)
     try:
-        exist = Bid.objects.get(offer=order, writer=request.user)
+        exist = Bid.objects.get(order=order, writer=request.user)
     except:
         exist = None
     if exist is None:
-        bid = Bid.objects.create(offer=order, message="Wykonam to zlecenie", price=120, writer=request.user)
+        bid = Bid.objects.create(order=order, message="Wykonam to zlecenie", price=120, writer=request.user)
         bid.save()
         return HttpResponse('Oferta została złożona')
     else:

@@ -9,9 +9,12 @@
     LISTA OFERT
     {% for order in orders %}
     <h2>{{ order.topic }}</h2>
-    <button><a href="{% url 'zamowienie' id=order.id %}">X</a></button>
+    <button><a href="{% url 'zamowienie' id=order.id %}">Przyjmij zamówienie</a></button>
     {% endfor %}
-    upload your image
-    <button><a href="{% url 'profile' %}">Upload your image</a></button>
+    <br>
+    DODAJ ZDJĘCIE DO PROFILU
+    <button>
+        <a href="{% url 'profile' %}">Upload your image</a>
+    </button>
 </body>
 </html>
