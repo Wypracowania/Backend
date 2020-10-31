@@ -16,14 +16,13 @@ stripe.api_key = 'sk_test_51H85zIGFoPYSSbM6SRULGQFrRbwm0DDQmEjHsrNUsWJN29ou60GbV
 
 @api_view(['POST'])
 def NewOrder(request):
-    data = json.loads(request.body)
-    username = data['username']
-    document = data['document']
-    category = data['category']
-    topic    = data['topic']
-    pages    = data['pages']
-    deadline = data['deadline']
-    instruct = data['instructions']
+    username = request.data.get('username')
+    document = request.data.get('document')
+    category = request.data.get('category')
+    topic    = request.data.get('topic')
+    pages    = request.data.get('pages')
+    deadline = request.data.get('deadline')
+    instruct = request.data.get('instructions')
 
     user = User.objects.get(username=username)
     if user is not None:
