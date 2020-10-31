@@ -4,7 +4,8 @@ from user.views import (
     GetOrders,
     GetOrderDetail,
     GetBids,
-    Payment
+    Payment,
+    GetAllOrders
 )
 
 urlpatterns = [
@@ -12,5 +13,6 @@ urlpatterns = [
     path('order/<int:id>/', GetOrderDetail),
     path('bids/<int:id>/', GetBids),
     path('all/<str:username>/', GetOrders),
+    path('all/', GetAllOrders),
     path('payment', Payment)
 ]

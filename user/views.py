@@ -52,6 +52,12 @@ def GetOrders(request, username):
     return Response(Serialized.data)
 
 @api_view(['GET'])
+def GetAllOrders(request):
+    user_orders = Order.objects.all()
+    Serialized = OrderSerializer(user_orders, many=True)
+    return Response(Serialized.data)
+
+@api_view(['GET'])
 def GetOrderDetail(request, id):
     Serialized = OrderSerializer(Order.objects.get(id = id))
     return Response(Serialized.data)

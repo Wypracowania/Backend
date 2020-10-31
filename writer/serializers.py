@@ -27,7 +27,8 @@ class ImageSerializer(serializers.ModelSerializer):
 class BidSerializer(serializers.ModelSerializer):
     writer = UserSerializer()
     order  = OrderSerializer()
-    photo  = ImageSerializer()
+    image  = ImageSerializer(read_only=True)
+
     class Meta:
         model = Bid
         fields = "__all__"

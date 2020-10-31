@@ -9,8 +9,7 @@ class Bid(models.Model):
     message = models.CharField(max_length=300)
     price   = models.IntegerField(default=20)
     writer  = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    photo   = models.ImageField()
-    
+
     def __str__(self):
         return self.order.topic + " Bid"
 
