@@ -62,8 +62,9 @@ def GetOrderDetail(request, id):
     return Response(Serialized.data)
 
 @api_view(['GET'])
-def GetBids(request, id):
-    order = Order.objects.get(id = id)
+def GetBids(request, username, id):
+    owner = User.objects.get(username=username)
+    order = Order.objects.get(id = id, owner=owner)
     Bids  = Bid.objects.filter(order=order)
     Serialized = BidSerializer(Bids, many=True)
     return Response(Serialized.data)

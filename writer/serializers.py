@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from .models import Bid, WriterImage
+from .models import (
+    Bid,
+    # WriterImage, 
+    # Review, 
+    Writer, 
+    # Categories,
+    Rating
+)
 from user.models import Order
 from django.contrib.auth.models import User
 
@@ -9,25 +16,50 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ['topic']
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['first_name', 'last_name']
 
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = WriterImage
-        fields = ['image']
 
-    def get_photo_url(self, image):
-        request = self.context.get('request')
-        photo_url = image.url
-        return request.build_absolute_uri(photo_url)
+class CustomerSerializer(serializers.RelatedField):
+    def to_representation(self, value):
+        return value.username
+
+
+class CategoriesField(serializers.RelatedField):
+    def to_representation(self, value):
+        return value.category
+
+
+class ReviewsSerializer(serializers.ModelSerializer):
+    customer = CustomerSerializer(read_only=True)
+
+    class Meta:
+        model = Rating
+        fields = ['customer', 'rate', 'opinion']
+
+
+class WriterSerializer(serializers.ModelSerializer):
+    writer = UserSerializer()
+    categories = CategoriesField(many=True, read_only=True)
+
+    class Meta:
+        model = Writer
+        fields = [
+            'rate',
+            'total_rates',
+            'writer',
+            'description',
+            'categories',
+            'photo'
+        ]
+    
 
 class BidSerializer(serializers.ModelSerializer):
-    writer = UserSerializer()
+    writer_details = WriterSerializer()
     order  = OrderSerializer()
-    image  = ImageSerializer(read_only=True)
 
     class Meta:
         model = Bid

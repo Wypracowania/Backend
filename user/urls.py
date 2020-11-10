@@ -11,7 +11,7 @@ from user.views import (
 urlpatterns = [
     path('nowe-zamowienie', NewOrder),
     path('order/<int:id>/', GetOrderDetail),
-    path('bids/<int:id>/', GetBids),
+    path('bids/<str:username>/<int:id>/', GetBids),
     path('all/<str:username>/', GetOrders),
     path('all/', GetAllOrders),
     path('payment', Payment)
