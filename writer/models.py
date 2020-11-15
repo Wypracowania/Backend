@@ -2,7 +2,7 @@ from django.db import models
 from user.models import Order
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator 
-
+from writer.resize_image import *
 # Create your models here.
 class Categories(models.Model):
     CATEGORIES = [
@@ -26,7 +26,10 @@ class Writer(models.Model):
     description = models.CharField(max_length=300, default='')
     # photo = models.ForeignKey(WriterImage, on_delete=models.CASCADE, null=True)
     photo = models.ImageField(upload_to="pisarz", unique=True, null=True)
-    completed_order = models.IntegerField(default=0)
+    mini_photo = models.ImageField(upload_to="pisarz", null=True, default="")
+    completed_orders = models.IntegerField(default=0)
+    is_online = models.BooleanField(default=False)
+
 
     def rate(self):
         all_objects = Rating.objects.filter(worker=self)
@@ -45,6 +48,11 @@ class Writer(models.Model):
         for x in all_objects:
             count += 1
         return count
+
+    def save(self, *args, **kwargs):
+        self.mini_photo = resize_image(self.photo, size=(120, 120))
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.writer.username

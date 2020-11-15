@@ -1,8 +1,17 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from user.serializers import OrderSerializer
+from user.serializers import (
+    OrderSerializer,
+    ConversationSerializer,
+    UnreadedMessagesSerializer,
+    MessagesSerializer
+)
 from rest_framework.decorators import api_view
-from user.models import Order
+from user.models import (
+    Order,
+    Conversation,
+    Message
+)
 from writer.models import Bid
 from writer.serializers import BidSerializer
 from django.contrib.auth.models import User
@@ -81,3 +90,67 @@ def Payment(request):
     return Response({
         'clientSecret': intent['client_secret']
     })
+
+@api_view(['GET'])
+def getConversation(request, username):
+    customer = User.objects.get(username=username)
+    conversations = Conversation.objects.filter(customer=customer)
+    serialized = ConversationSerializer(conversations, many=True)
+    return Response(serialized.data)
+
+
+@api_view(['GET'])
+def check_unreaded_messages(request, username):
+    customer = User.objects.get(username=username)
+    conversations = Conversation.objects.filter(customer=customer)
+    serialized = UnreadedMessagesSerializer(conversations, many=True)
+    return Response(serialized.data)
+    
+@api_view(['GET'])
+def check_for_message(request, username):
+    customer = User.objects.get(username=username)
+    conversations = Conversation.objects.filter(customer=customer)
+    for x in conversations:
+        if x.unreaded_messages():
+            return JsonResponse({"new_message": True}, safe=False)
+    return JsonResponse({"new_message": False}, safe=False)
+
+@api_view(['GET'])
+def get_messages(request, id):
+    conversation = Conversation.objects.get(id=id)
+    messages = Message.objects.filter(conversation=conversation)
+    serialized = MessagesSerializer(messages, many=True)
+    return Response(serialized.data)
+
+
+@api_view(['GET'])
+def read_messages(request, id):
+    conversation = Conversation.objects.get(id=id)
+    messages = Message.objects.filter(conversation=conversation)
+    for message in messages:
+        if message.readed == False:
+            message.readed = True
+            message.save()
+    return JsonResponse({"x": "xdd"}, safe=False)
+
+
+@api_view(['POST'])
+def create_message(request, id):
+    text = request.data.get('text')
+    username = request.data.get('username')
+    author = User.objects.get(username=username)
+    try:
+        conversation = Conversation.objects.get(id=id)
+        message = Message.objects.create(
+            conversation = conversation,
+            text = text,
+            author = author
+        )
+        message.save()
+        messages = Message.objects.filter(conversation=conversation)
+        serialized = MessagesSerializer(messages, many=True)
+        return Response(serialized.data)
+    except:
+        pass
+    return JsonResponse({"error": "message was not delivered"})
+

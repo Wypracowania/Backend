@@ -1,10 +1,7 @@
 from rest_framework import serializers
 from .models import (
     Bid,
-    # WriterImage, 
-    # Review, 
     Writer, 
-    # Categories,
     Rating
 )
 from user.models import Order
@@ -20,7 +17,7 @@ class OrderSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name']
+        fields = ['first_name', 'last_name', 'username']
 
 
 class CustomerSerializer(serializers.RelatedField):
@@ -38,7 +35,11 @@ class ReviewsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rating
-        fields = ['customer', 'rate', 'opinion']
+        fields = [
+            'customer', 
+            'rate', 
+            'opinion'
+        ]
 
 
 class WriterSerializer(serializers.ModelSerializer):
@@ -53,7 +54,8 @@ class WriterSerializer(serializers.ModelSerializer):
             'writer',
             'description',
             'categories',
-            'photo'
+            'photo',
+            'mini_photo'
         ]
     
 
