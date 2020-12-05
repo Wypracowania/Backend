@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from django.contrib.auth.models import Group
+from user.models import Conversation, Message
 import json
 
 # Create your views here.
@@ -35,6 +36,13 @@ def Register(request):
         user.save()
     except:
         user = None
+    customer_support = User.objects.get(username="customersupport_pl")
+    conversation = Conversation.objects.create(customer=user, writer=customer_support)
+    welcome_message = Message.objects.create(
+        conversation=conversation,
+        author=customer_support,
+        text="Witaj byczqu"
+    )
     if user is not None:
         return Response({'token': token.key})
     else:

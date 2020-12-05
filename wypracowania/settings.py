@@ -146,8 +146,6 @@ COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
 #S3 BUCKET
 
-AWS_ACCESS_KEY_ID = 'AKIA4SYCRZ3ZT2OWCCXX'
-AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'wypracowania'
 
 AWS_S3_REGION_NAME = 'eu-central-1'
@@ -155,6 +153,4 @@ AWS_S3_REGION_NAME = 'eu-central-1'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_DEFAULT_ACL = None
 AWS_S3_FILE_OVERWRITE = False
-# PUBLIC_MEDIA_LOCATION = 'pisarz'
-# MEDIA_URL = f'https://pisarz.s3.eu-central-1.amazonaws.com/pisarz/'
 AWS_S3_ADDRESSING_STYLE = "virtual"
